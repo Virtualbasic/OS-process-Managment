@@ -1,13 +1,21 @@
-from refsGenerator import AmountOFframes, AmountOFrefs
+memoryConfig={}
+with open("configMem.txt" , "r") as memconf:
+    for i in memconf:
+        slasher = i.index(":")
+        if i[:slasher] != "AmountOFframes":
+            memoryConfig[i[:slasher]] = int(i[slasher + 1:-1])
+        if i[:slasher] == "AmountOFframes":
+            memoryConfig[i[:slasher]] = [int(x) for x in i[slasher+1:-1].split(",")]
 
-def LRU(refs_list, frameVal):
-    queue_size = AmountOFframes[frameVal]
+
+def LRU(refs_list, FrameVal):
+    queue_size = memoryConfig["AmountOFframes"][FrameVal]
     faults = 0
     refs_c = 0
     queue = []
     lru_queue = []
 
-    while refs_c < AmountOFrefs:
+    while refs_c < memoryConfig["AmountOFrefs"]:
         if refs_list[refs_c] in queue:
             print("No fault oc")
             pass

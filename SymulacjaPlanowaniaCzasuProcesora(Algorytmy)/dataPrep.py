@@ -1,3 +1,5 @@
+
+
 def data_preparation(path):
     with open(path, "r") as proces:
         processList = []
@@ -10,4 +12,5 @@ def data_preparation(path):
                     processList.append([int(temp[i][:MaxAwaitTime]), int(temp[i][MaxAwaitTime + 1:]), False,0])
                     break
     processList.sort(key=lambda x:x[1])
+
     return processList

@@ -1,0 +1,6 @@
+AmountOfRepeat:6
+AmountOfprocess:25
+MaxExecTime:30
+MaxAwaitTime:220
+RandomizationEXC:0
+RandomizationAWAIT:0

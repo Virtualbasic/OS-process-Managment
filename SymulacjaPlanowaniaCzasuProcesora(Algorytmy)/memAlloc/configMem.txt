@@ -1,0 +1,5 @@
+AmountOFseries:10
+AmountOFrefs:100
+Amountofpages:15
+Randomizer:0
+AmountOFframes:4,8,12
