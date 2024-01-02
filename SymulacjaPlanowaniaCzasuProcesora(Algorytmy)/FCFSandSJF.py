@@ -28,21 +28,26 @@ config.close()
 def SeTplot(maxexctimeFCFS, maxecextimeSJF,howmanyprocesses,ranodmizer, MaxAwaittime):
     plt.title(f"Await time from {ranodmizer} to {MaxAwaittime}")
 
-    maxexctimeFCFS= [i for i in ResultFcFs]
+    maxexctimeFCFSs= maxexctimeFCFS[0]
 
-    maxecextimeSJF = [i for i in ResultSJF]
+    maxecextimeSJFf = maxecextimeSJF[0]
 
 
     bar_width = 0.35
 
     bar_shift = [x + bar_width for x in maxexctimeFCFS]
+    handler = 1
+    print(maxexctimeFCFS)
+    for i in maxexctimeFCFS:
+        plt.axhline(i, color="black", linestyle='-')
 
-    plt.bar(howmanyprocesses, maxexctimeFCFS, color='green', width=bar_width, label="FCFS")
-    plt.bar(bar_shift, maxecextimeSJF, color='blue', width=bar_width, label="SJF")
+    plt.bar(handler, maxexctimeFCFSs, color='green', width=bar_width, label="FCFS")
+    plt.bar((handler+1), maxecextimeSJFf, color='blue', width=bar_width, label="SJF")
 
     plt.xlabel("frames")
-    plt.ylabel(f"faults for specific amount of refs")
-    plt.xticks(maxecextimeSJF)
+    plt.ylabel(f"Avarge executive time")
+    #plt.xticks(maxecextimeSJF)
+    #plt.xticks()
     plt.legend()
     plt.show()
 

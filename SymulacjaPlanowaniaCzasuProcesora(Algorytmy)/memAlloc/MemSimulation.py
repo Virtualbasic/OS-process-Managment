@@ -60,14 +60,18 @@ if __name__ == "__main__":
     resultFIFO = []
     for val in range(0, len(memoryConfig["AmountOFframes"])):
         for i in range(0 , memoryConfig["AmountOFrefs"]):
-            print(LRU(LRUStorage, val))
-            resultFIFO.append([memoryConfig["AmountOFframes"][val], FIFO(FIFOStorage , val)])
-            resultLRU.append([memoryConfig["AmountOFframes"][val], LRU(LRUStorage, val)])
+            #print(LRU(LRUStorage, val))
+            listFIFO =FIFO(FIFOStorage , val)
+            listLRU = LRU(LRUStorage, val)
+            print(listFIFO)
+            resultFIFO.append([memoryConfig["AmountOFframes"][val], listFIFO[0],listFIFO[1]])
+            resultLRU.append([memoryConfig["AmountOFframes"][val],listLRU[0], listLRU[1] ])
     print(resultLRU)
 
     #LRU section
     LRUFaulst =[]
     LRUFrames =[]
+    LRUPageHit = []
     with open("LRU.json" , "r") as LRUfile:
         LRUdata = json.load(LRUfile)
     for i in range(len(resultLRU )):
@@ -75,13 +79,17 @@ if __name__ == "__main__":
     LRUdata["faulst"].append(LRUFaulst)
     for j in range(len(resultLRU)):
         LRUFrames.append(resultLRU[j][0])
+    for g in range(len(resultLRU)):
+        LRUPageHit.append(resultLRU[g][2])
     LRUdata["frames"].append(LRUFrames)
     LRUdata["refsAmount"].append(memoryConfig["AmountOFrefs"])
+    LRUdata["pagehit"].append(LRUPageHit)
     with open("LRU.json", "w") as LRUfile:
         json.dump(LRUdata ,  LRUfile , indent=2)
     #FIFO section
     FIFOFaulst = []
     FIFOFrames = []
+    FIFOPageHit = []
     with open("FIFO.json", "r") as FIFOfile:
         FIFOdata = json.load(FIFOfile)
     for i in range(len(resultFIFO)):
@@ -89,8 +97,11 @@ if __name__ == "__main__":
     FIFOdata["faulst"].append(FIFOFaulst)
     for j in range(len(resultFIFO)):
         FIFOFrames.append(resultFIFO[j][0])
+    for g in range(len(resultFIFO)):
+        FIFOPageHit.append(resultFIFO[g][2])
     FIFOdata["frames"].append(FIFOFrames)
     FIFOdata["refsAmount"].append(memoryConfig["AmountOFrefs"])
+    FIFOdata["pagehit"].append(FIFOPageHit)
     with open("FIFO.json", "w") as FIFOfile:
         json.dump(FIFOdata, FIFOfile, indent=2)
     #LRU GRAF

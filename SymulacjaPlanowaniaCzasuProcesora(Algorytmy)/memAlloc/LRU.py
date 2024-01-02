@@ -13,11 +13,13 @@ def LRU(refs_list, FrameVal):
     faults = 0
     refs_c = 0
     queue = []
+    pagehit = 0
     lru_queue = []
 
     while refs_c < memoryConfig["AmountOFrefs"]:
         if refs_list[refs_c] in queue:
             print("No fault oc")
+            pagehit +=1
             pass
             if refs_list[refs_c] in lru_queue:
                 del lru_queue[lru_queue.index(refs_list[refs_c])]
@@ -37,4 +39,4 @@ def LRU(refs_list, FrameVal):
                 faults += 1
                 print("faults found")
         refs_c += 1
-    return faults
+    return [faults,pagehit]
