@@ -7,8 +7,6 @@ import copy
 import numpy as np
 import  matplotlib.pyplot as plt
 refsD = []
-#tpf_fifo = [[] for i in range(0, len(AmountOFframes))]
-#print(tpf_fifo)
 
 memoryConfig={}
 with open("configMem.txt" , "r") as memconf:
@@ -24,17 +22,17 @@ def SeTplot(faults1, algorithm1, amountRefs1, frames1, faults2, algorithm2, amou
     plt.title("Comparison of Algorithms")
 
 
-    Frames1 = [i for i in frames1[0]]
-    Faults1 = [j for j in faults1[0]]
+    Frames1 = [i for i in frames1[-1]]
+    Faults1 = [j for j in faults1[-1]]
 
 
-    Frames2 = [i for i in frames2[0]]
-    Faults2 = [j for j in faults2[0]]
+    Frames2 = [i for i in frames2[-1]]
+    Faults2 = [j for j in faults2[-1]]
 
     bar_width = 0.35
 
 
-    bar_shift = [x + bar_width for x in Frames1]
+    bar_shift = [x + bar_width for x in Frames2]
 
 
     plt.bar(Frames1, Faults1, color='green', width=bar_width, label=algorithm1)
@@ -54,21 +52,17 @@ if __name__ == "__main__":
     RefStorage = symulation(memoryConfig)
     FIFOStorage =[i for i  in RefStorage]
     LRUStorage = copy.deepcopy(RefStorage)
-    #RefsTable = ReadRefs(path)
-    # print(FIFO(RefsTable, 2))
     resultLRU = []
     resultFIFO = []
     for val in range(0, len(memoryConfig["AmountOFframes"])):
         for i in range(0 , memoryConfig["AmountOFrefs"]):
-            #print(LRU(LRUStorage, val))
             listFIFO =FIFO(FIFOStorage , val)
             listLRU = LRU(LRUStorage, val)
             print(listFIFO)
             resultFIFO.append([memoryConfig["AmountOFframes"][val], listFIFO[0],listFIFO[1]])
             resultLRU.append([memoryConfig["AmountOFframes"][val],listLRU[0], listLRU[1] ])
-    print(resultLRU)
+    print(resultFIFO)
 
-    #LRU section
     LRUFaulst =[]
     LRUFrames =[]
     LRUPageHit = []
@@ -86,7 +80,7 @@ if __name__ == "__main__":
     LRUdata["pagehit"].append(LRUPageHit)
     with open("LRU.json", "w") as LRUfile:
         json.dump(LRUdata ,  LRUfile , indent=2)
-    #FIFO section
+
     FIFOFaulst = []
     FIFOFrames = []
     FIFOPageHit = []

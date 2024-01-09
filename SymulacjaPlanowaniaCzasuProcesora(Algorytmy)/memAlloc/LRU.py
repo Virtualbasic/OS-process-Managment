@@ -16,7 +16,7 @@ def LRU(refs_list, FrameVal):
     pagehit = 0
     lru_queue = []
 
-    while refs_c < memoryConfig["AmountOFrefs"]:
+    while refs_c < memoryConfig["AmountOFrefs"] * memoryConfig["AmountOFseries"]:
         if refs_list[refs_c] in queue:
             print("No fault oc")
             pagehit +=1
@@ -33,7 +33,6 @@ def LRU(refs_list, FrameVal):
                 print("faults found")
             else:
                 queue[queue.index(lru_queue[0])] = refs_list[refs_c]
-                # Remove  latest used mem page from lru queue
                 del lru_queue[0]
                 lru_queue.append(refs_list[refs_c])
                 faults += 1
